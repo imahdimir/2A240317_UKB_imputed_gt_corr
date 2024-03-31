@@ -8,9 +8,9 @@ import pandas as pd
 from bgen_reader import open_bgen
 from pathlib import Path
 
-from pv.d import d
-from pv.f import f
-from pv.v import v
+from lib.d import d
+from lib.f import f
+from lib.v import v
 
 def make_df_of_iids_from_bgen_open_obj(bg_opn) :
     bg_opn_s = list(bg_opn.samples)

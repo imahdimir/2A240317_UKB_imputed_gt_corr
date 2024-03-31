@@ -10,10 +10,10 @@ from bgen_reader import open_bgen
 from pathlib import Path
 from braceexpand import braceexpand
 
-from pv.d import d , PROJ
-from pv.f import f
-from pv.v import v
-from pv.fp import fp
+from lib.d import d , PROJ
+from lib.f import f
+from lib.v import v
+from lib.fp import fp
 
 class MfiCols :
     n_maf = 5

@@ -9,10 +9,10 @@ import numpy as np
 from bgen_reader import open_bgen
 import itertools
 
-from pv.d import d , PROJ
-from pv.f import f
-from pv.v import v
-from pv.fp import fp
+from lib.d import d , PROJ
+from lib.f import f
+from lib.v import v
+from lib.fp import fp
 
 def make_all_combinations() :
     info = [i / 100 for i in range(30 , 100 , 10)]
