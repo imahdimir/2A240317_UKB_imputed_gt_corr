@@ -4,17 +4,15 @@
     """
 
 import pandas as pd
-from pathlib import Path
-import numpy as np
-from bgen_reader import open_bgen
-import itertools
 
-from lib.d import d , PROJ
-from lib.f import f
 from lib.v import v
 from lib.fp import fp
+from lib.f import f
 
 def make_all_combinations() :
+    """  """
+
+    ##
     info = [i / 100 for i in range(30 , 100 , 10)]
     info += [.99]
 
@@ -34,7 +32,7 @@ def make_all_combinations() :
 
     ##
     def format_file_path(row , cn) :
-        return row[cn].as_posix().format(int(row['info_score'] * 100))
+        return row[cn].as_posix().format(int(row[v.info_score] * 100))
 
     for cn in [1 , 2] :
         df3[cn] = df3.apply(lambda r : format_file_path(r , cn) , axis = 1)
@@ -73,8 +71,8 @@ def save_corr(pr , ip , op , iscore) :
         pass
 
         ##
-        pr = 'FS'
-        iscore = .99
+        pr = 'PO'
+        iscore = .4
         ip = fp.dsg_by_info.as_posix().format(int(iscore * 100))
         op = fp.fs_dsg_corr.as_posix().format(int(iscore * 100))
 
@@ -115,15 +113,31 @@ def main() :
 
     ##
 
-    ##
-
-    ##
-
 def testing_area() :
     pass
 
     ##
     info_score = 0.9
     ps = 'FS'
+
+    ##
+    df_cors.iloc[890 :1000]
+
+    ##
+    df_cors.isna().any()
+
+    ##
+    msk = df_cors.isna()
+    df1 = df_cors[msk]
+
+    ##
+    g1 = gts1['rs6057425']
+    g2 = gts2['rs6057425']
+
+    ##
+    g1.isna().any()
+    g2.isna().any()
+
+    ##
 
     ##

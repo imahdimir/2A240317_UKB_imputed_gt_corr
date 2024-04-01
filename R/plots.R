@@ -15,60 +15,65 @@ library('readxl')
 
 
 
-plot_corr <- function(pair_type, pn, gtype, gn, info, dn) {
-
-  st <- paste('corr', pair_type, gtype, info, sep = '_')
-  fp <- glue('{dta_dir}/{st}.xlsx')
-  
-  ost <- paste('corr_hist', pair_type, gtype, info, sep = '_')
-  fpo <- glue('{fig_dir}/{ost}.png')
-  
-  df <- read_excel(fp, col_names = F)
+plot_corr <- function(dta_fp, pair_name, gtype_name, info_score, fpo) 
+  {
+  df <- read_excel(dta_fp, col_names = T)
+  names(df) = c('snp', 'corr')
+  df <- na.omit(df)
   
   n_snps <- nrow(df)
+  dn = info_score / 100
   
-  ggplot(data.frame(df), aes(x = ...1)) +
+  ggplot(data.frame(df), aes(x = corr)) +
     geom_histogram(binwidth = 0.02, fill = "#56B4E9", colour = "#56B4E9", alpha = 0.5) +
-    labs(title = paste0(pn," Corrs (",gn , ") for SNPS with INFO = ", dn, "-", dn + 0.01, " (n = ", n_snps,")"),
+    labs(title = glue('{pair_name}, {gtype_name}, SNPS with INFO = {dn} - {dn+0.01} (n = {n_snps})'),
          x = "Genotype Correlation",
          y = "Count") +
     geom_vline(xintercept=0.5, linetype="dotted") +
-    geom_vline(xintercept=mean(df$...1), linetype="dashed", color = 'red') +
+    geom_vline(xintercept=mean(df$corr), linetype="dashed", color = 'red') +
     theme_classic() +
     theme(legend.position="none")
   
   ggsave(fpo)
+  }
+
+info <- c(30, 40, 50, 60, 70, 80, 90, 99)
+
+out_dir <- '/Users/mmir/Library/CloudStorage/Dropbox/C1-P-G/A1-Git-SF/imputed-genotype-corr-240317-SF/out/fig/FS-dsg-hist'
+dta_dir <- '/Users/mmir/Library/CloudStorage/Dropbox/C1-P-G/A1-Git-SF/imputed-genotype-corr-240317-SF/out/dta/FS-dsg-corr'
+
+prd <- expand.grid(out_dir, dta_dir, 'Full Sibs', 'Dosages', info)
+
+out_dir <- '/Users/mmir/Library/CloudStorage/Dropbox/C1-P-G/A1-Git-SF/imputed-genotype-corr-240317-SF/out/fig/FS-hc-hist'
+dta_dir <- '/Users/mmir/Library/CloudStorage/Dropbox/C1-P-G/A1-Git-SF/imputed-genotype-corr-240317-SF/out/dta/FS-hc-corr'
+
+prd1 <- expand.grid(out_dir, dta_dir, 'Full Sibs', 'Hard-Call', info)
+
+prd <- rbind(prd, prd1)
+
+out_dir <- '/Users/mmir/Library/CloudStorage/Dropbox/C1-P-G/A1-Git-SF/imputed-genotype-corr-240317-SF/out/fig/PO-dsg-hist'
+dta_dir <- '/Users/mmir/Library/CloudStorage/Dropbox/C1-P-G/A1-Git-SF/imputed-genotype-corr-240317-SF/out/dta/PO-dsg-corr'
+
+prd1 <- expand.grid(out_dir, dta_dir, 'Parent-Offspring', 'Dosages', info)
+
+prd <- rbind(prd, prd1)
+
+
+out_dir <- '/Users/mmir/Library/CloudStorage/Dropbox/C1-P-G/A1-Git-SF/imputed-genotype-corr-240317-SF/out/fig/PO-hc-hist'
+dta_dir <- '/Users/mmir/Library/CloudStorage/Dropbox/C1-P-G/A1-Git-SF/imputed-genotype-corr-240317-SF/out/dta/PO-hc-corr'
+
+prd1 <- expand.grid(out_dir, dta_dir, 'Parent-Offspring', 'Hard-Call', info)
+
+prd <- rbind(prd, prd1)
+
+for (x in 1:nrow(prd))
+  {
+  pair_name = prd[x, 'Var3']
+  gtype_name = prd[x, 'Var4']
+  info_score = prd[x, 'Var5']
+  dta_fp = glue("{prd[x, 'Var2']}/i{info_score}.xlsx")
+  fpo = glue("{prd[x, 'Var1']}/i{info_score}.png")
   
-}
-
-
-out_dir <- '/Users/mahdi/Library/CloudStorage/Dropbox/0-all/1-out-all/imputed_genotype-sibling-task-240311'
-dta_dir <- glue('{out_dir}/dta')
-fig_dir <- glue('{out_dir}/fig')
-
-
-pair_type <- c('sibs', 'parent_offspring')
-gtype <- c('dosages', 'hard_calls')
-info <- c(30, 99)
-
-prd <- expand.grid(pair_type, gtype, info)
-
-prd$pn <- with(prd, ifelse(Var1=='sibs', 'Sibs', 'Parent-Offspring'))
-prd$gn <- with(prd, ifelse(Var2=='dosages', 'Dosages', 'Hard Calls'))
-prd$dn <- with(prd, ifelse(Var3==30, .3, .99))
-
-
-for (x in 1:nrow(prd)){
-  pair_type = prd[x, 'Var1']
-  pair_name = prd[x, 'pn']
-  
-  gtype = prd[x, 'Var2']
-  gn = prd[x, 'gn']
-  
-  info = prd[x, 'Var3']
-  dn = prd[x, 'dn']
-  
-  plot_corr(pair_type,pair_name, gtype,gn, info, dn)
-}
-
+  plot_corr(dta_fp,pair_name,gtype_name,info_score, fpo)
+  }
 

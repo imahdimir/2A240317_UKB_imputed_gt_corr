@@ -3,16 +3,13 @@
 
     """
 
-import pandas as pd
-from pathlib import Path
-import numpy as np
-from bgen_reader import open_bgen
 import itertools
+import pandas as pd
 
-from lib.d import d , PROJ
 from lib.f import f
-from lib.v import v
 from lib.fp import fp
+from lib.s import d
+from lib.v import v
 
 def merge_all_flt_snps() :
     fps = list(d.flt_snps.glob('*.txt'))
