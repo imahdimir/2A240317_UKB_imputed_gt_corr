@@ -88,22 +88,24 @@ def filter_snps() :
 
     ##
     # to not reading again from disk for subsequent runs
-    df = df0.copy()
+    df1 = df0.copy()
 
     ##
     # keep snps with maf > 1%
-    msk = df[mc.maf].gt(.01)
-    df1 = df[msk]
+    msk = df1[mc.maf].gt(.01)
+    df2 = df1[msk]
 
     ##
-    df = df1.copy()
+    df = df2.copy()
 
     ##
     df[v.msk] = False
 
     for b in bins.values() :
         df[v.ms1] = df[mc.info].ge(b) & df[mc.info].lt(b + .01)
+
         _df = df[df[v.ms1]]
+
         if len(_df) > 1000 :
             _df = _df.sample(1000)
 
