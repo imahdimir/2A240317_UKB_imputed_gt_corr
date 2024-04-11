@@ -6,10 +6,10 @@
 import itertools
 import pandas as pd
 
-from lib.f import f
-from lib.fp import fp
-from lib.s import d
-from lib.v import v
+from prj.f import f
+from prj.fp import fp
+from prj.s import d
+from prj.v import v
 
 def merge_all_flt_snps() :
     fps = list(d.flt_snps.glob('*.txt'))
