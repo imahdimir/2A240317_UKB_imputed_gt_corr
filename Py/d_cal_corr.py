@@ -5,9 +5,9 @@
 
 import pandas as pd
 
-from proj.v import v
-from proj.fp import fp
-from proj.f import f
+from prj.v import v
+from prj.fp import fp
+from prj.f import f
 
 def make_all_combinations() :
     """  """
