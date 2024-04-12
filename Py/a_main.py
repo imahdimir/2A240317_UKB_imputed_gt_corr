@@ -9,8 +9,8 @@ import pandas as pd
 from bgen_reader import open_bgen
 from pathlib import Path
 
-from prj.v import v
-from prj.fp import fp
+from proj.v import v
+from proj.fp import fp
 
 class MfiCols :
     n_maf = 5
