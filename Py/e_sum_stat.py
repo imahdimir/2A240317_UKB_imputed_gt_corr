@@ -5,9 +5,9 @@
 
 import pandas as pd
 
-from prj.v import v
-from prj.fp import fp
-from prj.f import f
+from proj.v import v
+from proj.fp import fp
+from proj.f import f
 
 class Const :
     dsg = 'DSG'
