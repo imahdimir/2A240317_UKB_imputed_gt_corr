@@ -33,7 +33,7 @@ class Vars :
 
 v = Vars()
 
-bins = {
+BINS = {
         0 : .3 ,
         1 : .4 ,
         2 : .5 ,
@@ -45,15 +45,15 @@ bins = {
         }
 
 ##
-def merge_all_chromosoms_snps() :
+def merge_all_chromosomes_snps() :
     """ """
 
     ##
     df = pd.DataFrame()
     for i in range(1 , 22 + 1) :
         print(i)
-        snps_fp = dyr.unpkd_mfi / f'ukb_mfi_chr{i}_v3.txt'
-        _df = pd.read_csv(snps_fp , sep = '\s+' , header = None)
+        snps_fp = dyr.unpkd_mfi / f'ukb_mfi_chr{i}_v3.txt'  # May want to consider https://docs.python.org/3/library/os.path.html#os.path.join
+        _df = pd.read_csv(snps_fp , sep = '\s+' , header = None) # May want a different name other than _df
         _df[v.chr] = i
         df = pd.concat([df , _df])
 
@@ -88,7 +88,7 @@ def filter_snps() :
 
     ##
     # to not reading again from disk for subsequent runs
-    df1 = df0.copy()
+    df1 = df0.copy()  # Do you need to make this copy?  I don't see df0 being used after this
 
     ##
     # keep snps with maf > 1%
@@ -96,13 +96,13 @@ def filter_snps() :
     df2 = df1[msk]
 
     ##
-    df = df2.copy()
+    df = df2.copy()  # Do you need to make this copy?  I don't see df2 being used after this
 
     ##
     df[v.msk] = False
 
-    for b in bins.values() :
-        df[v.ms1] = df[mc.info].ge(b) & df[mc.info].lt(b + .01)
+    for b in BINS.values() :
+        df[v.ms1] = df[mc.info].ge(b) & df[mc.info].lt(b + .01)   # Could use https://pandas.pydata.org/docs/reference/api/pandas.Series.between.html if you'd like
 
         _df = df[df[v.ms1]]
 
@@ -145,7 +145,7 @@ def separate_snps_by_chr() :
         #            sep = '\t' ,
         #            index = False ,
         #            header = False)
-        break
+        break  # Why do you have this break here?
 
 ##
 def filter_snps_second_approach() :

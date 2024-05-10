@@ -1,11 +1,11 @@
 #!/usr/bin/bash
 
-source "/homes/nber/mahdimir/.zshrc"
+source "/homes/nber/mahdimir/.zshrc" # I generally recommend against using personal space or settings in project areas
 
 PROJ="imputed-genotype-corr-240317"
 proj_g_med_dir="$LOCAL/proj/$PROJ/med"
 
-sample_fp="/disk/genetics2/ukb/orig/UKBv3/sample/ukb11425_imp_chr1_22_v3_s487395.sample"
+sample_fp="/disk/genetics/data/ukb/private/v3/raw/sample/ukb11425_imp_chr1_22_v3_s487395.sample"
 fs_po_ids="$proj_g_med_dir/fs_po_ids.txt"
 plink_out="$proj_g_med_dir/plink_out"
 
